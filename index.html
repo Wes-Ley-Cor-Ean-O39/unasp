@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>#VacinaJa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.26.9/sweetalert2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.26.9/sweetalert2.all.min.js"></script>  
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+    <!--<script src="https://kit.fontawesome.com/8e05c50e0b.js" crossorigin="anonymous"></script>-->
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="unasp.png"/>
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    <!-- Custom styles for this template -->
+    <link href="form-validation.css" rel="stylesheet">
+  </head>
+<body class="bg-light">
+
+<div class="container">
+  <main>
+    <div class="py-5 text-center">
+      <img class="d-block mx-auto mb-4" src="unaspcovid.png" alt="" width="140" height="60">
+      <h2><b style="color: chartreuse;">#VacinaJa</b></h2>
+      <p class="lead">Este site foi desenvolvido para <b style="color: darkblue;">auxiliar a vacinação</b> a todos os funcionários diretos e terceirizados da Faculdade Adventista de São Paulo, assim como alunos de <b style="color: darkblue;">todos os níveis e campus.</b></p>
+    </div>
+
+    <div class="row g-3">
+
+    <h6 class="mb-3" style="text-align: center; color: deeppink;">Pacientes cadastrados na Fila</h6>
+
+    <div id="listacovid">
+      <div class="row">
+        <div class="col">Nome</div>
+        <div class="col">Cep</div>
+        <div class="col">Alterar</div>
+        <div class="col">Deletar</div>
+      </div>      
+    </div>
+
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Informações cadastrais para vacinação COVID-19</h4>
+        <form id="contactForm">
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label for="firstName" class="form-label">Primeiro nome</label>
+              <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+              <div class="invalid-feedback">
+                O primeiro nome válido é obrigatório.
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="lastName" class="form-label">Ultimo nome</label>
+              <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+              <div class="invalid-feedback">
+                É necessário um sobrenome válido.
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="email" class="form-label">Email <span class="text-muted">(Opcional)</span></label>
+              <input type="email" class="form-control" id="email" placeholder="seuemail@exemplo.com">
+              <div class="invalid-feedback">
+                Por favor, insira um endereço de e-mail válido para atualizações de envio.
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="address" class="form-label">Endereço</label>
+              <input type="text" class="form-control" id="address" placeholder="Avenida paulista, 987" required disabled> 
+              <div class="invalid-feedback">
+                Por favor insira seu endereço de entrega.
+              </div>
+            </div>
+
+            <div class="col-md-5">
+              <label for="bairro" class="form-label">Bairro</label>
+              <input type="text" class="form-control" id="bairro" placeholder="" required disabled>
+              <div class="invalid-feedback">
+                Selecione um país válido.
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="state" class="form-label">Estado</label>
+              <input type="text" class="form-control" id="state" placeholder="" required disabled>
+              <div class="invalid-feedback">
+                Forneça um estado válido.
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="cep" class="form-label">Cep</label>
+              <input type="tel" class="form-control" id="cep" placeholder="" required 
+              onkeypress="$(this).mask('00000-000')" 
+              onblur="pesquisacep(this.value);">
+              <div class="invalid-feedback">
+                O código postal é obrigatório.
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <h4 class="mb-3">Sexo</h4>
+
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">Masculino</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+            <label class="form-check-label" for="flexRadioDefault2">Feminino</label>
+          </div>
+          <div class="form-check" style="padding-bottom: 15px;">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
+            <label class="form-check-label" for="flexRadioDefault3">Outros</label>
+          </div>
+
+          <div class="row gy-3">
+            <div class="col-md-6">
+              <label for="nomemae" class="form-label">Nome da mãe</label>
+              <input type="text" class="form-control" id="nomemae" placeholder="" required>
+              <div class="invalid-feedback">
+                Nome da mãe é obrigatório
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="nomepai" class="form-label">Nome do pai</label>
+              <input type="text" class="form-control" id="nomepai" placeholder="" required>
+              <div class="invalid-feedback">
+                Nome do pai é obrigatório              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="data" class="form-label">Data nascimento</label>
+              <input type="date" class="form-control" id="data" placeholder="" required>
+              <div class="invalid-feedback">
+                Data de nascimento obrigatório
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="telefone" class="form-label">Telefone</label>
+              <input type="tel" class="form-control" id="telefone" required onkeypress="$(this).mask('(00) 00000-0000')" style="padding-left: 10px; padding-right: 10px;">
+              <div class="invalid-feedback">
+                Número do Telefone obrigatório.
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Finalizar cadastro</button>
+        
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">&copy; 2020–2021 Faculdade Adventista de São Paulo</p>
+  </footer>
+</div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+    <script src="form-validation.js"></script>
+
+    </body>
+</html>

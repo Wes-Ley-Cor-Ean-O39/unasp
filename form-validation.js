@@ -1,3 +1,7 @@
+//**********Analise e Desenvolvimento de Sistemas */
+//**********Wesley Araujo */
+//**********Programação Mobile */
+//**********Firebase */
 var firebaseConfig = {
   apiKey: "AIzaSyDkkf2BbefLQeEEQXIura0AH30iTsQVF9g",
   authDomain: "programacaomobile-covid.firebaseapp.com",
@@ -14,12 +18,11 @@ var fs = firebase.firestore();
 
 function readCovid(){
   fs.collection('covid').onSnapshot(function(snapshot){
-    document.querySelector('#listacovid').innerHTML=''
+    document.querySelector('#listacovid').innerHTML='';
     snapshot.forEach(function(covidValue){
       document.querySelector('#listacovid').innerHTML+=`
       <div class="row">
         <div class="col" style="margin-top: 7px;">${covidValue.data().nome}</div>
-        <div class="col" style="margin-top: 7px;">${covidValue.data().estado}</div>
         <div class="col"><button type="button" class="btn btn-outline-warning" onClick="updateCovid('${covidValue.id}')">Alterar</button></div>
         <div class="col"><button type="button" class="btn btn-outline-danger" onClick="deletePacientes('${covidValue.id}')">Deletar</button></div>
       </div>    
@@ -38,6 +41,7 @@ document.getElementById('contactForm').addEventListener("submit", (e)=>{
     var estado = document.getElementById("state").value
     var cep = document.getElementById("cep").value
     e.preventDefault()
+    insert(nome, data, telefone, bairro, estado, cep)
     addCovid(nome, data, telefone, bairro, estado, cep)
     limparForm()
 })
@@ -92,28 +96,24 @@ function deletePacientes(id){
 function updateCovid(id) {
   Swal.fire({
       title: 'Editar Paciente',
-      html: `<input type="text" id="firstName" class="swal2-input" placeholder="Nome">
-      <input type="text" id="state" class="swal2-input" placeholder="Estado">`,
+      html: `<input type="text" id="firstName" class="swal2-input" placeholder="Nome">`,
       confirmButtonText: 'Confirmar',
       focusConfirm: false,
       preConfirm: () => {
         const nome = Swal.getPopup().querySelector('#firstName').value
-        const estado = Swal.getPopup().querySelector('#state').value
-        if (!nome || !estado) {
-          Swal.showValidationMessage(`Please enter nome and uf`)
+        if (!nome) {
+          Swal.showValidationMessage(`Please enter nome`)
         }
-        return { nome: nome, estado: estado}
+        return { nome: nome}
       }
     }).then((result) => {
         var newUpdate = {
-            nome: result.value.nome,
-            estado: result.value.estado
+            nome: result.value.nome
         }
         let db = fs.collection("covid").doc(id)
           db.set(newUpdate).then(()=> {
             Swal.fire(`
                 Novo Nome: ${result.value.nome}
-                Novo Estado: ${result.value.estado}
         `.trim())
         })
     })
@@ -134,6 +134,7 @@ function limparForm(){
   selectedRow = null;
 }
 
+//**********Api ViaCep */
 function meu_callback(conteudo) {
   if (!("erro" in conteudo)) {
     //Atualiza os campos com os valores.
@@ -190,3 +191,43 @@ function pesquisacep(valor) {
       limparForm();
   }
 };
+
+//**********Web SQL Database - Client-Side */
+var db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024);
+
+function insert(nome, data, telefone, bairro, estado, cep){
+  db.transaction(function (tx) {
+     tx.executeSql('CREATE TABLE IF NOT EXISTS COVID (nome, data, telefone, bairro, estado, cep)');
+     tx.executeSql('INSERT INTO COVID (nome, data, telefone, bairro, estado, cep) VALUES (?,?,?,?,?,?)', 
+     [nome, data, telefone, bairro, estado, cep]);
+  });
+}
+
+function selectQueue() {
+  db.transaction(function(tx) {
+      tx.executeSql("SELECT NOME,TELEFONE FROM covid", [], function(sqlTransaction, sqlResultSet) {
+          var rows = sqlResultSet.rows;
+          var len = rows.length;
+          for (var i = 0; i < len; i++) {
+              var covid = rows[i];
+              console.log("WSD " + i + " - Nome: " + covid.nome + ", Telefone : " + covid.telefone);
+              var js = "WSD " + i + " - Nome: " + covid.nome + ", Telefone : " + covid.telefone;
+              Swal.fire({
+                title: 'Web SQL Database Topzera Men XD',
+                text: js,
+                width: 600,
+                padding: '3em',
+                background: '#fff url("https:/sweetalert2.github.io/images/trees.png")',
+                backdrop: `
+                  rgba(0,0,123,0.4)
+                  url("https:/sweetalert2.github.io/images/nyan-cat.gif")
+                  left top
+                  no-repeat
+                `
+              })
+          }
+          console.log('Done!!!');
+      });
+  });
+}
+

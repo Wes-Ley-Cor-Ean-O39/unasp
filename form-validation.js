@@ -210,17 +210,17 @@ function selectQueue() {
           var len = rows.length;
           for (var i = 0; i < len; i++) {
               var covid = rows[i];
-              console.log("WSD " + i + " - Nome: " + covid.nome + ", Telefone : " + covid.telefone);
-              var js = "WSD " + i + " - Nome: " + covid.nome + ", Telefone : " + covid.telefone;
+              console.log(i + " - Nome: " + covid.nome + ", Telefone : " + covid.telefone);
+              var js = "Nome: " + covid.nome + ", Telefone: " + covid.telefone;
               Swal.fire({
-                title: 'Web SQL Database Topzera Men XD',
+                title: 'Web SQL Database',
                 text: js,
                 width: 600,
                 padding: '3em',
-                background: '#fff url("https:/sweetalert2.github.io/images/trees.png")',
+                background: '#fff url("https://firebasestorage.googleapis.com/v0/b/programacaomobile-covid.appspot.com/o/trees.png?alt=media&token=bd9c687c-0ae3-4268-ace9-20d36c34d36c")',
                 backdrop: `
                   rgba(0,0,123,0.4)
-                  url("https:/sweetalert2.github.io/images/nyan-cat.gif")
+                  url("https://firebasestorage.googleapis.com/v0/b/programacaomobile-covid.appspot.com/o/nyan-cat.gif?alt=media&token=d80f2fbf-72b0-43bf-9804-36b161ca5924")
                   left top
                   no-repeat
                 `

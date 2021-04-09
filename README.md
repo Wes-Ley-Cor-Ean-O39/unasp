@@ -14,7 +14,7 @@ Plataforma de cadastro para covid para alunos e funcionarios da Universidade Adv
 
 Ferramentas
 
-HTML, CSS, JavaScript, Firebase - Firestore, Jquery, Bootstrap e Api de Cep (WebService ViaCep).
+HTML, CSS, JavaScript, Firebase - Firestore/Storage, Jquery, Bootstrap e Api de Cep (WebService ViaCep), Monaca (para geração de .apk).
 
 Ações
 

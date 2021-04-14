@@ -21,12 +21,24 @@ function readCovid(){
     document.querySelector('#listacovid').innerHTML='';
     snapshot.forEach(function(covidValue){
       document.querySelector('#listacovid').innerHTML+=`
-      <div class="row">
-        <div class="col" style="margin-top: 7px;">${covidValue.data().nome}</div>
-        <div class="col"><button type="button" class="btn btn-outline-warning" onClick="updateCovid('${covidValue.id}')">Alterar</button></div>
-        <div class="col"><button type="button" class="btn btn-outline-danger" onClick="deletePacientes('${covidValue.id}')">Deletar</button></div>
-      </div>    
-      `
+        <table class="table table-striped">
+          <tbody>
+            <tr>
+              <td class="col col-lg-2">Nome: ${covidValue.data().nome}</td>
+            </tr>
+            <tr>
+              <td class="col col-lg-2">Bairro: ${covidValue.data().bairro}</td>
+            </tr>
+            <tr>
+              <td class="col col-lg-2">Cep: ${covidValue.data().cep}</td>
+            </tr>
+            <tr>
+              <td><button type="button" class="btn btn-outline-warning" onClick="updateCovid('${covidValue.id}')">Alterar</button>
+              <button type="button" class="btn btn-outline-danger" onClick="deletePacientes('${covidValue.id}')" style="margin-bottom: 0px;margin-left: 15px;">Deletar</button></td> 
+            </tr>
+          </tbody>
+        </table>
+        `
     })
   })
 }

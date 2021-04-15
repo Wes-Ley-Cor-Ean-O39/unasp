@@ -108,24 +108,32 @@ function deletePacientes(id){
 function updateCovid(id) {
   Swal.fire({
       title: 'Editar Paciente',
-      html: `<input type="text" id="firstName" class="swal2-input" placeholder="Nome">`,
+      html: `<input type="text" id="firstName" class="swal2-input" placeholder="Nome">
+             <input type="text" id="bairro" class="swal2-input" placeholder="Bairro">
+             <input type="text" id="cep" class="swal2-input" placeholder="Cep">`,
       confirmButtonText: 'Confirmar',
       focusConfirm: false,
       preConfirm: () => {
         const nome = Swal.getPopup().querySelector('#firstName').value
+        const bairro = Swal.getPopup().querySelector('#bairro').value
+        const cep = Swal.getPopup().querySelector('#cep').value
         if (!nome) {
           Swal.showValidationMessage(`Please enter nome`)
         }
-        return { nome: nome}
+        return { nome: nome, bairro: bairro, cep: cep}
       }
     }).then((result) => {
         var newUpdate = {
-            nome: result.value.nome
+            nome: result.value.nome,
+            bairro: result.value.bairro,
+            cep: result.value.cep
         }
         let db = fs.collection("covid").doc(id)
           db.set(newUpdate).then(()=> {
             Swal.fire(`
                 Novo Nome: ${result.value.nome}
+                Novo Bairro: ${result.value.bairro}
+                Novo Cep: ${result.value.cep}
         `.trim())
         })
     })
